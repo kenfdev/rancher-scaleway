@@ -1,0 +1,50 @@
+# Scaleway Token
+scw_token = "your_token"
+
+# Scaleway Organization ID
+scw_org = "your_org_id"
+
+# Admin password to access Rancher
+admin_password = "admin"
+
+# Resources will be prefixed with this to avoid clashing names
+prefix = "your_prefix"
+
+# rancher/rancher image tag to use
+rancher_version = "latest"
+
+# Region where resources should be created
+region = "par1"
+
+# Rancher Server Address
+rancher_server_address = "your.server.com"
+
+# The cluster name to join
+cluster_name = "tmpenv"
+
+# Count of agent nodes with role all
+count_agent_all_nodes = "1"
+
+# Count of agent nodes with role etcd
+count_agent_etcd_nodes = "0"
+
+# Count of agent nodes with role controlplane
+count_agent_controlplane_nodes = "0"
+
+# Count of agent nodes with role worker
+count_agent_worker_nodes = "0"
+
+# Docker version of host being added to a cluster (running `rancher/rancher-agent`)
+docker_version_agent = "17.03"
+
+# Scaleway instance type
+type = "START1-S"
+
+# Email for your Cloudflare account
+cloudflare_email = "youraccount@example.com"
+
+# Cloudflare token
+cloudflare_token = "your_cloudflare_token"
+
+# Cloudflare zone
+cloudflare_zone = "your.zone"
