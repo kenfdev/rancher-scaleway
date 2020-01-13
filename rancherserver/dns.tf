@@ -1,18 +1,18 @@
 provider "cloudflare" {
-  email = "${var.cloudflare_email}"
-  token = "${var.cloudflare_token}"
+  email   = var.cloudflare_email
+  api_key = var.cloudflare_api_key
 }
 
 variable "cloudflare_email" {}
 
-variable "cloudflare_token" {}
+variable "cloudflare_api_key" {}
 
-variable "cloudflare_zone" {}
+variable "cloudflare_zone_id" {}
 
 resource "cloudflare_record" "rancherserver" {
-  domain = "${var.cloudflare_zone}"
-  name   = "rancher"
-  value  = "${scaleway_server.rancherserver.public_ip}"
-  type   = "A"
-  ttl    = 3600
+  zone_id = var.cloudflare_zone_id
+  name    = "rancher"
+  value   = scaleway_instance_server.rancherserver.public_ip
+  type    = "A"
+  ttl     = 3600
 }

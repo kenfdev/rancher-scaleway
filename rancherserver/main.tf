@@ -1,9 +1,13 @@
 # Configure the Scaleway Provider
 provider "scaleway" {
-  organization = "${var.scw_org}"
-  token        = "${var.scw_token}"
-  region       = "${var.region}"
+  access_key      = var.scw_access_key
+  organization_id = var.scw_org
+  secret_key      = var.scw_token
+  region          = var.region
+  zone            = var.zone
 }
+
+variable "scw_access_key" {}
 
 variable "scw_org" {}
 
@@ -25,61 +29,49 @@ variable "region" {
   default = "par1"
 }
 
+variable "zone" {
+  default = "fr-par-1"
+}
+
 variable "docker_version_server" {
-  default = "17.03"
+  default = "19.03"
 }
 
 variable "type" {
-  default = "START1-S"
+  default = "DEV1-S"
 }
 
 variable "rancher_server_url" {}
 
-data "scaleway_image" "xenial" {
-  architecture = "x86_64"
-  name         = "Ubuntu Xenial"
-}
-
-resource "scaleway_server" "rancherserver" {
-  count               = "1"
-  image               = "${data.scaleway_image.xenial.id}"
-  type                = "${var.type}"
-  name                = "${var.prefix}-rancherserver"
-  security_group      = "${scaleway_security_group.allowall.id}"
-  dynamic_ip_required = true
-}
-
-resource "scaleway_user_data" "rancherserver" {
-  server = "${scaleway_server.rancherserver.id}"
-  key    = "cloud-init"
-  value  = "${data.template_file.userdata_server.rendered}"
-}
-
-data "template_file" "userdata_server" {
-  template = "${file("files/userdata_server")}"
-
-  vars {
-    admin_password        = "${var.admin_password}"
-    docker_version_server = "${var.docker_version_server}"
-    rancher_version       = "${var.rancher_version}"
-    rancher_server_url    = "${var.rancher_server_url}"
+resource "scaleway_instance_server" "rancherserver" {
+  image             = "ubuntu-bionic"
+  type              = var.type
+  name              = "${var.prefix}-rancherserver"
+  security_group_id = scaleway_instance_security_group.allowall.id
+  enable_dynamic_ip = true
+  cloud_init = templatefile("${path.module}/files/userdata_server", {
+    admin_password        = var.admin_password
+    docker_version_server = var.docker_version_server
+    rancher_version       = var.rancher_version
+    rancher_server_url    = var.rancher_server_url
+  })
+  root_volume {
+    size_in_gb            = 20
+    delete_on_termination = false
   }
 }
 
-resource "scaleway_security_group" "allowall" {
+resource "scaleway_instance_security_group" "allowall" {
   name        = "rancher-server-allowall"
   description = "allow all traffic"
-}
 
-resource "scaleway_security_group_rule" "all_accept" {
-  security_group = "${scaleway_security_group.allowall.id}"
-
-  action    = "accept"
-  direction = "inbound"
-  ip_range  = "0.0.0.0/0"
-  protocol  = "TCP"
+  inbound_rule {
+    action   = "accept"
+    ip_range = "0.0.0.0/0"
+    protocol = "TCP"
+  }
 }
 
 output "rancher-url" {
-  value = ["https://${scaleway_server.rancherserver.public_ip}"]
+  value = ["https://${scaleway_instance_server.rancherserver.public_ip}"]
 }

@@ -1,17 +1,20 @@
+# Scaleway Access Key
+scw_access_key = "XXXXXXXXXXXXXXXXXXXX"
+
 # Scaleway Token
-scw_token = "your_token"
+scw_token = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
 
 # Scaleway Organization ID
-scw_org = "your_org_id"
-
-# Admin password to access Rancher
-admin_password = "admin"
-
-# Resources will be prefixed with this to avoid clashing names
-prefix = "your_prefix"
+scw_org = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
 
 # Rancher Server URL
-rancher_server_url = "http://rancher.server.com"
+rancher_server_url = "http://rancher.example.com"
+
+# Admin password to access Rancher
+admin_password = "xxxxxxxxxxxx"
+
+# Resources will be prefixed with this to avoid clashing names
+prefix = "xxxxxxx"
 
 # rancher/rancher image tag to use
 rancher_version = "latest"
@@ -19,17 +22,17 @@ rancher_version = "latest"
 # Region where resources should be created
 region = "par1"
 
+# Zone where resources should be created
+zone = "fr-par-1"
+
 # Docker version of host running `rancher/rancher`
-docker_version_server = "17.03"
+docker_version_server = "19.03"
 
 # Scaleway instance type
-type = "START1-S"
+type = "DEV1-S"
 
-# Email for your Cloudflare account
-cloudflare_email = "youraccount@example.com"
+cloudflare_email = "your@example.com"
 
-# Cloudflare token
-cloudflare_token = "your_cloudflare_token"
+cloudflare_api_key = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
 
-# Cloudflare zone
-cloudflare_zone = "your.zone"
+cloudflare_zone_id = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
