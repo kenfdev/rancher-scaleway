@@ -27,6 +27,8 @@ This terraform is based on the [DO quickstart deployment of Rancher](https://git
 
 Be sure to set the following variables:
 
+* scw_access_key
+  * Your Scaleway Access Key
 * scw_token
   * Your Scaleway Secret Token
 * scw_org
@@ -37,10 +39,10 @@ Be sure to set the following variables:
   * The URL you will use for your Rancher Server. This terraform is going to setup a rancher subdomain to your cloudflare zone. So if your zone is example.com , this terraform will create an A record to resolve rancher.example.com .
 * cloudflare_email
   * Your Email for Cloudflare
-* cloudflare_token
-  * Your Cloudflare API token
-* cloudflare_zone
-  * Your Cloudflare zone
+* cloudflare_api_key
+  * Your Cloudflare API Key
+* cloudflare_zone_id
+  * Your Cloudflare zone ID
 
 `rancheragent/terraform.tfvars`
 
@@ -82,7 +84,7 @@ terraform apply
 **Destroy the Rancher Agent and related resources**
 ```bash
 cd rancheragent
-terraform apply
+terraform destroy
 ```
 
 **Destroy the Rancher Server and related resources**
